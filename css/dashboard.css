@@ -112,6 +112,8 @@ section {
     flex-direction: row;
     align-items: center;
     margin-bottom: 20px;
+    width: 500px;
+
 }
 
 .search input {
@@ -119,15 +121,18 @@ section {
     padding: 10px;
     border-radius: 5px;
     border: none;
+    width: 10px;
 }
 
-.search button {
+.search .buscar {
     padding: 10px;
     background-color: var(--gris);
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    position: relative;
+    margin-bottom: 13px;
 }
 
 .search .agregar {
@@ -137,12 +142,13 @@ section {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-decoration: none;
+    position: relative;
+    margin-bottom: 13px;
 }
 
 .search h2 {
     font-size: 36px;
-    margin-left: 15%;
+    margin-left: 95%;
 }
 
 
