@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="esp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css" media="all" />
+    <link rel="icon" type="image/x-icon" href="../../img/icon.ico" />
+    <title>Administrar Pruebas</title>
+
+</head>
+
+<body>
+    <main>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <img src="/img/logo.png" alt="Sitio Oficial" width="75px"></img>
+                    </li>
+                    <li>Bienvenido, [Administrator Name]</li>
+                </ul>
+            </nav>
+        </header>
+        <aside>
+            <ul>
+                <li><a href="/admin/funcion/admon-funcion.html">FUNCIONES</a></li>
+                <li><a href="/admin/pelicula/admon-pelicula.html">PELÍCULAS</a></li>
+                <li><a href="/admin/sala/admon-sala.html">SALAS</a></li>
+                <li><a href="/admin/horario/admon-horario.html">HORARIOS</a></li>
+                <li><a href="/admin/usuario/admon-usuario.html">USUARIOS</a></li>
+            </ul>
+        </aside>
+        <section class="content">
+            <div class="search">
+                <input type="text" placeholder="Search">
+                <button class="buscar">Search</button>
+                <h2 class="title">HORARIOS</h2>
+            </div>
+            <form id="add-form">
+                <div class="user-row">
+                    <div class="column">
+                        <h2 style="text-align: center; padding-bottom: 1em;">NUEVO / EDITAR</h2>
+
+                        <h1>Upload Image to Firebase Cloud Storage</h1>
+
+                        <img id="image-preview" src="" alt="" class="pelicula-img">
+
+                        <br>
+
+                        <input type="file" id="image-input">
+
+                        <button id="upload-button">Upload</button>
+
+                    <!--<label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+
+                        <label for="duracion">Duracion:</label>
+                        <input type="text" id="duracion" name="duracion" required>
+
+                        <label for="sinopsis">Sinopsis:</label>
+                        <input type="text" id="sinopsis" name="sinopsis" required>
+
+                    -->        
+                
+                        <hr class="form-divider">
+                        <input id="btn-save" type="submit" value="Registrar">
+                    </div>
+                    <div class="column">
+                        <div class="person-info">
+                            <div class="row">
+                                <div class="col">Imagen</div>
+                                <div class="col">Nombre</div>
+                                <div class="col">Duracion</div>
+                                <div class="col">Sinopsis</div>
+                            </div>
+                            <div id="list-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </section>
+    </main>
+
+    <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+
+    import {
+      getStorage,
+      ref,
+      uploadBytesResumable,
+      getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAazv4nUxbgswnON1l1x5JG7VsBZcPsEE0",
+        authDomain: "cinemastlahuacoficial.firebaseapp.com",
+        projectId: "cinemastlahuacoficial",
+        storageBucket: "cinemastlahuacoficial.appspot.com",
+        messagingSenderId: "773845341205",
+        appId: "1:773845341205:web:dc4d99cd063f48f5016a1c",
+        measurementId: "G-PH0NHTFBJJ"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    // Create a reference to the storage bucket
+    var storageRef = firebase.storage().ref();
+
+    // Create an event listener for the upload button
+    document.getElementById("upload-button").addEventListener("click", function() {
+
+    // Get the image file from the input
+    var file = document.getElementById("image-input").files[0];
+
+    // Create a reference to the image file in the storage bucket
+    var imageRef = storageRef.child("images/" + file.name);
+
+    // Upload the image file
+    imageRef.put(file).then(function() {
+
+        // Display the image preview
+        document.getElementById("image-preview").src = imageRef.getDownloadURL();
+
+    }, function(error) {
+
+        // Handle the error
+        console.log(error);
+
+    });
+
+    });
+        
+    </script>
+</body>
+
+</html>
