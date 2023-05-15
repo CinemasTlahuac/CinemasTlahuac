@@ -1,7 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/design.css" media="all" />
+    <link rel="icon" type="image/x-icon" href="img/icon.ico" />
+    <title>Cinemas Tláhuac | Cartelera</title>
 
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
 
+    <!--COMPONENTES-->
+    <script type="module" src="/cmp/navbar.js"></script>
+    <script type="module" src="/cmp/session.js"></script>
+    <script type="module" src="/cmp/footer.js"></script>
 
+    <!--FIREBASE-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/init.js"></script>
+
+    <!--DEPENDENCIAS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+</head>
+
+<body class="main-bg">
+
+    <user-navbar></user-navbar>
 
 <div id="general">
         <div id="pelicula" >
@@ -33,3 +62,13 @@
         </div>
 
     </div>
+
+   
+    <user-footer></user-footer>
+
+</body>
+
+</html>
+
+
+
