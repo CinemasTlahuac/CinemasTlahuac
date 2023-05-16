@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {
     onGetDocuments
+
 } from './init.js';
 
 // Cartas 
@@ -24,7 +25,7 @@ onGetDocuments("Pelicula", (querySnapshot) => {
                 <h2>${item.nombre}</h2>
                 <div class="card-text">
                     <div>
-                        <p><strong>Director:</strong>${item.nombre}</p>
+                        <p><strong>Director:</strong>${item.director}</p>
                         <p><strong>Género:</strong>${item.genero}</p>
                     </div>
                     <div>
@@ -34,8 +35,8 @@ onGetDocuments("Pelicula", (querySnapshot) => {
                 </div>
             
                 <div class="card-buttons">
-                    <a href="pelicula.html?peliculaId=Some%20${doc.id}" class="button primary">Ver Trailer</a>
-                    <a href="#" class="button secondary">Comprar Boleto</a>
+                    <a href="pelicula.html?peliculaId=${doc.id}" class="button primary">Ver Trailer</a>
+                    <a href="boletos.html" class="button secondary">Comprar Boleto</a>
                 </div>
             </div>
             `;

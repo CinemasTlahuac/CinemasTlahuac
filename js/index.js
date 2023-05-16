@@ -22,8 +22,8 @@ const newLink = document.getElementById("newLink")
 document.getElementById("movie-titulo").innerHTML = nombre;
 document.getElementById("movie-descripcion").innerHTML = sinopsis;
 
-mainmovie.addEventListener("click", async(e) => {
-    newLink.href = 'pelicula.html?peliculaId=%20' + encodeURIComponent(id);
+mainmovie.addEventListener("click",  async(e) => {
+    newLink.href = 'pelicula.html?peliculaId='+encodeURIComponent(id);
 })
 
 // Carousel 
@@ -42,14 +42,12 @@ onGetDocuments("Pelicula", (querySnapshot) => {
         const item = doc.data();
         html += `
 					<div class="pelicula">
-                        <span hidden>${doc.id}</span>
                         <a href="pelicula.html?peliculaId=%20${doc.id}" id="idPelicula"><img src="${item.urlImagen}" alt=""></a>
                     </div>
             `;
-        console.log(doc.data().urlImagen);
         carousel.innerHTML = html;
     });
 
-
+    
 
 });
