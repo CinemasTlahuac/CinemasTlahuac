@@ -9,6 +9,8 @@
     <link rel="icon" type="image/x-icon" href="img/icon.ico" />
     <title>Cinemas Tláhuac | Cartelera</title>
 
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
+
     <!--COMPONENTES-->
     <script type="module" src="/cmp/navbar.js"></script>
     <script type="module" src="/cmp/session.js"></script>
@@ -19,6 +21,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/init.js"></script>
 
     <!--DEPENDENCIAS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -33,12 +36,14 @@
     <div style="text-align: center;">
         <h2 class="pt-4 pb-2 titulos">CARTELERA</h2>
         <!-- 1.- RECUPERAR COLECCIÓN DE PELÍCULAS-->
-        <div class="carta-contenedor" id="carta-contenedor">
+         <div class="carta-contenedor" id="carta-contenedor">
 
         </div>
     </div>
     <user-footer></user-footer>
     <script type="module" src="js/cartelera.js"></script>
+
+
 </body>
 
 </html>
