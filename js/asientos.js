@@ -1,14 +1,46 @@
+import {
+  saveDocument,
+  getDocument,
+  getDocuments,
+  onGetDocuments,
+} from './init.js';
+
+var urlParams = ""
+var funcionId = ""
+const addForm = document.getElementById('add-form');
+let editStatus = false;
+
+
+// Extract the query parameter value
+urlParams = new URLSearchParams(window.location.search);
+funcionId = urlParams.get('funcionId');
+
+// Call the getDocument function
+const docRef = await getDocument('Funcion', funcionId);
+
+// Access the data in the document
+var movieName = docRef.data().fk_idPelicula;
+var movieDesc = docRef.data().descripcion;
+
+// Obtain the corresponding tags via ID
+document.getElementById("movieName").innerHTML = movieName;
+document.getElementById("movieDesc").innerHTML = movieDesc;
+
+function getCurrentDateTime() {
+  var now = new Date();
+  return now;
+}
+
+var seatId = 0;
 const container = document.querySelector('.seats');
 const seats = document.querySelectorAll('.row .seat:not(.occupied');
 const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
-const formulario = document.getElementById('formulario');
-const contenedorQR = document.getElementById("contenedorQR")
-const QR = new QRCode(contenedorQR);
 
 populateUI();
 let ticketPrice = +movieSelect.value;
+var totalPrices ="";
 
 // Save selected movie index and price
 function setMovieData(movieIndex, moviePrice) {
@@ -16,18 +48,13 @@ function setMovieData(movieIndex, moviePrice) {
   localStorage.setItem('selectedMoviePrice', moviePrice);
 }
 
-formulario.addEventListener('submit', (e) => {
-  e.preventDefault();
-  let codificar = '';
-  codificar = movieSelect + total;
-  QR.makeCode(codificar);
-});
-
 // update total and count
 function updateSelectedCount() {
   const selectedSeats = document.querySelectorAll('.row .seat.selected');
 
   const seatsIndex = [...selectedSeats].map((seat) => [...seats].indexOf(seat));
+
+  seatId = seatsIndex;
 
   localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex));
 
@@ -39,6 +66,7 @@ function updateSelectedCount() {
 
   count.innerText = selectedSeatsCount;
   total.innerText = selectedSeatsCount * ticketPrice;
+  totalPrices = total.textContent
 }
 
 // get data from localstorage and populate ui
@@ -61,7 +89,7 @@ function populateUI() {
 
 // Movie select event
 movieSelect.addEventListener('change', (e) => {
-  ticketPrice = +e.target.value;
+  ticketPrice = 50;
   setMovieData(e.target.selectedIndex, e.target.value);
   updateSelectedCount();
 });
@@ -77,3 +105,26 @@ container.addEventListener('click', (e) => {
 
 // intial count and total
 updateSelectedCount();
+
+document.getElementById("factorizar").addEventListener('click', (e) => {
+  e.preventDefault()
+
+  movieName
+  movieDesc 
+
+  var currentDateTime = getCurrentDateTime();
+  var dateString = currentDateTime.toString();
+
+
+  if (!editStatus) {
+      saveDocument('Boleto', {
+          fk_idFuncion: movieName,
+          fechaCompra: dateString,
+          precio: totalPrices,
+          idAsiento: seatId,
+          descripcion: movieDesc
+      });
+  } else {
+     console.log("Error al almacenar")
+  }
+});
