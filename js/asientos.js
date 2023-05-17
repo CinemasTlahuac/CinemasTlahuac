@@ -3,6 +3,9 @@ const seats = document.querySelectorAll('.row .seat:not(.occupied');
 const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
+const formulario = document.getElementById('formulario');
+const contenedorQR = document.getElementById("contenedorQR")
+const QR = new QRCode(ContenedorQR);
 
 populateUI();
 let ticketPrice = +movieSelect.value;
@@ -12,6 +15,13 @@ function setMovieData(movieIndex, moviePrice) {
   localStorage.setItem('selectedMovieIndex', movieIndex);
   localStorage.setItem('selectedMoviePrice', moviePrice);
 }
+
+formulario.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let codificar = '';
+  codificar = movieSelect + total;
+  QR.makeCode(codificar);
+});
 
 // update total and count
 function updateSelectedCount() {
