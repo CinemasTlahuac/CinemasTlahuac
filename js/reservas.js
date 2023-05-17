@@ -1,15 +1,15 @@
 // @ts-nocheck
 import {
-    getDocument, onGetDocuments
-
+    getDocument,
+    onGetDocuments
 } from './init.js';
 
 var urlParams = ""
 var peliculaId = ""
 
 // Extract the query parameter value
-    urlParams = new URLSearchParams(window.location.search);
-    peliculaId = urlParams.get('peliculaId');
+urlParams = new URLSearchParams(window.location.search);
+peliculaId = urlParams.get('peliculaId');
 
 // Call the getDocument function
 const docRef = await getDocument('Pelicula', peliculaId);
@@ -41,7 +41,7 @@ newImg.src = urlImagen;
 // })
 
 const divElement = document.getElementById('horarioFunciones');
-let idHorario = "";
+
 let editStatus = false;
 
 onGetDocuments("Funcion", (querySnapshot) => {
@@ -50,29 +50,40 @@ onGetDocuments("Funcion", (querySnapshot) => {
 
     // Loop through each document in the snapshot
     querySnapshot.forEach((doc) => {
+        let idHorario = "";
         const item = doc.data();
         // Retrieve the "urlImagen" field from the document and log it to the console
-        if(item.fk_idPelicula == idPelicula ){ //
+        if (item.fk_idPelicula == nombre) { //
+
+            console.log("aquí todo bien")
+
             idHorario = item.fk_idHorario //idHorario is 5
 
+            console.log(idHorario)
+
             onGetDocuments("Horario", (querySnapshot) => {
-            
+
                 querySnapshot.forEach((doc) => {
                     const horaId = doc.data();
-                    if(horaId == idHorario){
-                        html += `
-                        <button class="button" id="horario"><a href="">${horaId.horaInicio} "-" ${horaId.horaFin}</a></button>
-                        `;
-            
-                    divElement.innerHTML = html;
-                    }//second if end
-                    else{console.log("No existe horarios")}
 
+                    let hora = (horaId.horaInicio.toString() + " - " + horaId.horaFin.toString())
+
+                    if (hora == idHorario) {
+                        console.log("Aquí va el horario: " + hora)
+                        html += `
+                        <button class="button" id="horario"><a href="" style="color: white;">${horaId.horaInicio} - ${horaId.horaFin}</a></button>
+                        `;
+
+                        divElement.innerHTML = html;
+                    } //second if end
+                    else {
+
+                    }
                 }); //end of for each for funcion
             });
 
         } else {
-            console.log("No existe horarios")
+
         }
     }); //end for first forEach
 
