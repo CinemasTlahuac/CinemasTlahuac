@@ -37,9 +37,9 @@
     <div class="booking-container">
                 
         <div class="movie-container">
-            <label> Select a movie:</label>
+            <label style="text-align: center;" id="movieName"> Select a movie</label>
             <select id="movie">
-            <option value="50">Godzilla vs Kong</option>
+            <option value="50" id="movieDesc">Godzilla vs Kong</option>
             </select>
         </div>
     
@@ -129,12 +129,12 @@
             >0</span
             >
         </p>
-        <form id="formulario">
-            <button type="submit" class="btn">Facturizar</button>
+        <button class="btn" id="factorizar">Facturizar</button>
+        <form class="add-form">
+            <p class="text" id="fechaCompra" hidden></p>
+            <p class="text" id="idAsiento" hidden></p>
+            <p class="text" id="precio" hidden></p>
         </form>
-        <div class="container">
-            <div id="contenedorQR"></div>
-        </div>
     </div>
 
     </main>   
@@ -144,6 +144,5 @@
 
 
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
 </html>
