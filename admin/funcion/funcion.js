@@ -25,19 +25,19 @@ window.addEventListener('DOMContentLoaded', async() => {
 
     //PELICULAS
     listPeliculas.addEventListener("change", () => {
-        selectedPeliculaOptionValue = listPeliculas.options[listPeliculas.selectedIndex].value;
+        selectedPeliculaOptionValue = listPeliculas.options[listPeliculas.selectedIndex].text;
         console.log(selectedPeliculaOptionValue)
     })
 
     //HORARIOS
     listHorarios.addEventListener("change", () => {
-        selectedHorarioOptionValue = listHorarios.options[listHorarios.selectedIndex].value;
+        selectedHorarioOptionValue = listHorarios.options[listHorarios.selectedIndex].text; 
         console.log(selectedHorarioOptionValue)
     })
 
     //SALAS
     listSalas.addEventListener("change", () => {
-        selectedSalaOptionValue = listSalas.options[listSalas.selectedIndex].value;
+        selectedSalaOptionValue = listSalas.options[listSalas.selectedIndex].text;
         console.log(selectedSalaOptionValue)
     })
 
