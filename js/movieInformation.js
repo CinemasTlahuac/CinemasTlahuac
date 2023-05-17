@@ -6,8 +6,6 @@ import {
 
 var urlParams = ""
 var peliculaId = ""
-
-
 // Extract the query parameter value
     urlParams = new URLSearchParams(window.location.search);
     peliculaId = urlParams.get('peliculaId');
@@ -49,7 +47,7 @@ const mainmovie = document.getElementById("btn-ref")
 const newLink = document.getElementById("newLink")
 
 mainmovie.addEventListener("click",  async(e) => {
-    newLink.href = 'boletos.html?peliculaId='+encodeURIComponent(peliculaId);
+    newLink.href = 'reserva.html?peliculaId='+encodeURIComponent(peliculaId);
 })
 
 
