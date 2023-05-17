@@ -6,12 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/design.css" media="all" />
-       <link rel="stylesheet" type="text/css" href="css/dashboard.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="css/reserva.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/reservas.css" media="all" />
     <link rel="icon" type="image/x-icon" href="img/icon.ico" />
-    <title>Cinemas Tláhuac | Cartelera</title>
-
-    <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
+    <title>Cinemas Tláhuac | Boletos</title>
 
     <!--COMPONENTES-->
     <script type="module" src="/cmp/navbar.js"></script>
@@ -23,7 +20,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="js/init.js"></script>
 
     <!--DEPENDENCIAS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -34,43 +30,44 @@
 
     <user-navbar></user-navbar>
 
-<div id="general">
-        <div id="pelicula" >
-            <img class="imgd" src="img/spiderman.jpg" />
-            <form class="form" action="" method="get">
-               
-                    <p class="pfeature"><span class="subheadings">SPIDERMAN</span></p>
-                    <p class="pfeature"><span class="subheadings">Clasificación: </span>+13</p>
-                    <p class="pfeature"><span class="subheadings">GENERO: </span>Animada</p>
-            </form>
-
+    <!--CONTENIDO-->
+        <h2 class="pt-4 pb-2 titulos">Compra de boletos</h2>
+        <!-- 1.- RECUPERAR COLECCIÓN DE PELÍCULAS-->
+        
+  <div class="content-section">
+    <div class="column">
+      <div class="movie-container">
+        <div class="movie-image-container">
+          <img class="movie-image" src="" alt="Movie Poster" id="img-url">
         </div>
-        <div id="horarios" >
-            <h3>Selecciona el horario</h3>
-            <p>18 de Mayo 2023</p>
-            <a href="" class="btn">12:45</a>
-            <a href="" class="btn">14:45</a>
-            <a href="" class="btn">15:45</a>
-            <a href="" class="btn">17:45</a><br>
-
-            <br><p>20 de Mayo 2023</p><br>
-
-            <a href="" class="btn">11:45</a>
-            <a href="" class="btn">13:45</a>
-            <a href="" class="btn">15:45</a>
-            <a href="" class="btn">21:45</a>
-            
-
+        <div class="movie-details">
+          <p id="titulo"><span>Titulo:</span></p>
+          <p id="director"><span>Director:</span></p>
+          <p id="duracion"><span>Duración:</span></p>
+          <p id="clasificacion"><span>Clasificación:</span></p>
+          <p id="genero"><span>Genero:</span></p>
         </div>
-
+      </div>
     </div>
-
-   
+    <div class="column">
+        <br><br>
+      <div class="title">Selecionar Horario de Funcion</div>
+      <div class="button-row" id="horarioFunciones">
+        <button class="button" id="horario">Button 1</button>
+        <button class="button">Button 2</button>
+        <button class="button">Button 3</button>
+        <button class="button">Button 4</button>
+        <button class="button">Button 5</button>
+        <button class="button">Button 6</button>
+        <button class="button">Button 7</button>
+        <button class="button">Button 8</button>
+      </div>
+    </div>
+  </div>
     <user-footer></user-footer>
+    <script type="module" src="js/reservas.js"></script>
+
 
 </body>
 
 </html>
-
-
-
