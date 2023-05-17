@@ -56,32 +56,14 @@ onGetDocuments("Funcion", (querySnapshot) => {
         if (item.fk_idPelicula == nombre) { //
 
             console.log("aquí todo bien")
-
             idHorario = item.fk_idHorario //idHorario is 5
 
-            console.log(idHorario)
+            html += `
+                <button class="button" id="horario"><a href="asientos.html?funcionId=${doc.id}" style="color: white;">${item.fk_idHorario}</a></button>
+                `;
 
-            onGetDocuments("Horario", (querySnapshot) => {
-
-                querySnapshot.forEach((doc) => {
-                    const horaId = doc.data();
-
-                    let hora = (horaId.horaInicio.toString() + " - " + horaId.horaFin.toString())
-
-                    if (hora == idHorario) {
-                        console.log("Aquí va el horario: " + hora)
-                        html += `
-                        <button class="button" id="horario"><a href="" style="color: white;">${horaId.horaInicio} - ${horaId.horaFin}</a></button>
-                        `;
-
-                        divElement.innerHTML = html;
-                    } //second if end
-                    else {
-
-                    }
-                }); //end of for each for funcion
-            });
-
+                divElement.innerHTML = html;
+        
         } else {
 
         }
