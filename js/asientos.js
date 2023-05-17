@@ -5,7 +5,7 @@ const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
 const formulario = document.getElementById('formulario');
 const contenedorQR = document.getElementById("contenedorQR")
-const QR = new QRCode(ContenedorQR);
+const QR = new QRCode(contenedorQR);
 
 populateUI();
 let ticketPrice = +movieSelect.value;
