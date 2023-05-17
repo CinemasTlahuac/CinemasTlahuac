@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', async() => {
 
     //FUNCIONES
     listFunciones.addEventListener("change", () => {
-        selectedFuncionOptionValue = listFunciones.options[listFunciones.selectedIndex].value;
+        selectedFuncionOptionValue = listFunciones.options[listFunciones.selectedIndex].text;
         console.log(selectedFuncionOptionValue)
     });
 
@@ -75,6 +75,7 @@ window.addEventListener('DOMContentLoaded', async() => {
 
                 addForm["idBoleto"].value = item.idBoleto;
                 addForm["descripcion"].value = item.descripcion;
+                addForm["idAsiento"].value = item.idAsiento;
                 addForm["fechaCompra"].value = item.fechaCompra;
                 addForm["funcion"].value = selectedFuncionOptionValue;
                 addForm["precio"].value = item.precio;
@@ -99,6 +100,7 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
 
     const idBoleto = addForm['idBoleto'];
     const descripcion = addForm['descripcion'];
+    const idAsiento = addForm['idAsiento'];
     const fechaCompra = addForm['fechaCompra'];
     const optionsFuncion = addForm['funcion'];
     const selectedFuncion = optionsFuncion.selectedIndex;
@@ -110,6 +112,7 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
             'Boleto', {
                 idBoleto: idBoleto.value,
                 descripcion: descripcion.value,
+                idAsiento: idAsiento.value,
                 fechaCompra: fechaCompra.value,
                 fk_idFuncion: selectedFuncionOptionValue,
                 precio: precio.value
@@ -120,6 +123,7 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
             id, {
                 idBoleto: idBoleto.value,
                 descripcion: descripcion.value,
+                idAsiento: idAsiento.value,
                 fechaCompra: fechaCompra.value,
                 fk_idFuncion: selectedFuncionOptionValue,
                 precio: precio.value
@@ -137,6 +141,7 @@ document.getElementById("btn-clean").addEventListener('click', (e) => {
 
     var idBoleto = document.getElementById("idBoleto");
     var descripcion = document.getElementById("descripcion");
+    var idAsiento = document.getElementById("idAsiento");
     var fechaCompra = document.getElementById("fechaCompra");
     var fk_idFuncion = document.getElementById("fk_idFuncion");
     var precio = document.getElementById("precio");
@@ -144,12 +149,14 @@ document.getElementById("btn-clean").addEventListener('click', (e) => {
     if (!editStatus) {
         idBoleto.value = "";
         descripcion.value = "";
+        idAsiento.value = "";
         fechaCompra.value = "";
         fk_idFuncion.value = "";
         precio.value = "";
     } else {
         idBoleto.value = "";
         descripcion.value = "";
+        idAsiento.value = "";
         fechaCompra.value = "";
         fk_idFuncion.value = "";
         precio.value = "";
