@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/asientos.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/design.css" media="all" />
+
+    <link rel="icon" type="image/x-icon" href="img/icon.ico" />
+    <title>Cinemas Tláhuac | Cartelera</title>
+
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
+
+    <!--COMPONENTES-->
+    <script type="module" src="/cmp/navbar.js"></script>
+    <script type="module" src="/cmp/session.js"></script>
+    <script type="module" src="/cmp/footer.js"></script>
+
+    <!--FIREBASE-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!--DEPENDENCIAS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="main-bg">
+
+    <user-navbar></user-navbar>
+
+    <!--ASIENTOS-->
+    <main>
+    <div class="booking-container">
+                
+        <div class="movie-container">
+            <label> Select a movie:</label>
+            <select id="movie">
+            <option value="220">Godzilla vs Kong (RS.220)</option>
+            <option value="320">Radhe (RS.320)</option>
+            <option value="250">RRR (RS.250)</option>
+            <option value="260">F9 (RS.260)</option>
+            </select>
+        </div>
+    
+        <ul class="showcase">
+            <li>
+            <div class="seat"></div>
+            <small>Available</small>
+            </li>
+            <li>
+            <div class="seat selected"></div>
+            <small>Selected</small>
+            </li>
+            <li>
+            <div class="seat sold"></div>
+            <small>Sold</small>
+            </li>
+        </ul>
+        <div class="seats">
+            <div class="screen"></div>
+    
+            <div class="row">
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            </div>
+    
+            <div class="row">
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat sold"></div>
+            <div class="seat sold"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            </div>
+            <div class="row">
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat sold"></div>
+            <div class="seat sold"></div>
+            </div>
+            <div class="row">
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            </div>
+            <div class="row">
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat sold"></div>
+            <div class="seat sold"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            </div>
+            <div class="row">
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat"></div>
+            <div class="seat sold"></div>
+            <div class="seat sold"></div>
+            <div class="seat sold"></div>
+            <div class="seat"></div>
+            </div>
+        </div>
+    
+        <p class="text">
+            You have selected <span id="count">0</span> seat for a price of RS.<span
+            id="total"
+            >0</span
+            >
+        </p>
+    </div>
+
+    </main>   
+
+    <user-footer></user-footer>
+    <script type="module" src="js/asientos.js"></script>
+
+
+</body>
+
+</html>
