@@ -42,7 +42,7 @@ onGetDocuments("Pelicula", (querySnapshot) => {
         const item = doc.data();
         html += `
 					<div class="pelicula">
-                        <a href="pelicula.html?peliculaId=%20${doc.id}" id="idPelicula"><img src="${item.urlImagen}" alt=""></a>
+                        <a href="pelicula.html?peliculaId=${doc.id}" id="idPelicula"><img src="${item.urlImagen}" alt=""></a>
                     </div>
             `;
         carousel.innerHTML = html;
