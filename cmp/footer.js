@@ -13,11 +13,9 @@ class UserFooter extends HTMLElement {
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            Cartelera
+                            <a href="./cartelera.html">Cartelera</a>
                         </h6>
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            Próximos Estrenos
-                        </h6>
+                      
                     </div>
                     <!-- Grid column -->
 
