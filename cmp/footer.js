@@ -13,7 +13,7 @@ class UserFooter extends HTMLElement {
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            <a href="./cartelera.html" styles ="text-decoration: none; colo: grey; >Cartelera</a>
+                            <a href="./cartelera.html" styles ="text-decoration: none; colo: grey;" >Cartelera</a>
                         </h6>
                       
                     </div>
