@@ -13,7 +13,7 @@
                     <!-- Collapsible wrapper -->
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Navbar brand -->
-                        <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                        <a class="navbar-brand mt-2 mt-lg-0" href="/index.html">
                             <img src="./img/logo.png" height="50" alt="Cinemas Tláhuac" loading="lazy" />
                         </a>
                         <!-- Left links -->
