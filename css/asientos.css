@@ -27,6 +27,10 @@ main {
     padding-bottom: 35px;
   }
 
+    .navbar-toggler{
+       visibility: hidden;
+     }   
+
     /* FOOTER*/
 
   .text-uppercase {
