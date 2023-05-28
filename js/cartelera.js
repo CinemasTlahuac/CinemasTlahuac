@@ -36,7 +36,7 @@ onGetDocuments("Pelicula", (querySnapshot) => {
             
                 <div class="card-buttons">
                     <a href="pelicula.html?peliculaId=${doc.id}" class="button primary">Ver Trailer</a>
-                    <a href="boletos.html" class="button secondary">Comprar Boleto</a>
+                    <a href="reserva.html?peliculaId=${doc.id}" class="button secondary">Comprar Boleto</a>
                 </div>
             </div>
             `;
