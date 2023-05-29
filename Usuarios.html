@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+
+    <!-- Agrega los enlaces a los estilos CSS y otras dependencias si es necesario -->
+
+</head>
+
+<body>
+    <h1>Registro de Usuario</h1>
+
+    <form id="userForm">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+        </div>
+        <div>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div>
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" id="contrasena" required>
+        </div>
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <script>
+        // Aquí puedes agregar el código JavaScript para manejar el formulario de registro de usuario
+
+        const userForm = document.getElementById('userForm');
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Obtén los valores del formulario
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const email = document.getElementById('email').value;
+            const contrasena = document.getElementById('contrasena').value;
+
+            // Aquí puedes agregar el código para enviar los datos del usuario a tu servidor o base de datos
+            // Puedes utilizar una biblioteca como axios para realizar una solicitud HTTP o utilizar Firebase Authentication para autenticar al usuario y almacenar sus datos
+
+            // Ejemplo con axios:
+            const userData = {
+                nombre,
+                apellido,
+                email,
+                contrasena
+            };
+
+            axios.post('/api/registrar-usuario', userData)
+                .then((response) => {
+                    // El usuario se registró correctamente
+                    console.log('Usuario registrado:', response.data);
+                    // Aquí puedes redirigir al usuario a otra página o realizar otras acciones
+                })
+                .catch((error) => {
+                    // Ocurrió un error al registrar el usuario
+                    console.error('Error al registrar el usuario:', error);
+                    // Aquí puedes mostrar un mensaje de error al usuario o realizar otras acciones
+                });
+        });
+    </script>
+</body>
+
+</html>

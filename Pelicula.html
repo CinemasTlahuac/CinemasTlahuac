@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Película</title>
+
+    <!-- Agrega los enlaces a los estilos CSS y otras dependencias si es necesario -->
+
+</head>
+
+<body>
+    <h1>Agregar Película</h1>
+
+    <form id="movieForm">
+        <div>
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" required>
+        </div>
+        <div>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" required></textarea>
+        </div>
+        <div>
+            <label for="actores">Actores:</label>
+            <input type="text" id="actores" required>
+        </div>
+        <div>
+            <label for="duracion">Duración (minutos):</label>
+            <input type="number" id="duracion" required>
+        </div>
+        <div>
+            <label for="clasificacion">Clasificación:</label>
+            <input type="text" id="clasificacion" required>
+        </div>
+        <div>
+            <label for="trailer">Enlace de YouTube para el tráiler:</label>
+            <input type="url" id="trailer" required>
+        </div>
+        <div>
+            <label for="imagen">Imagen:</label>
+            <input type="file" id="imagen" accept="image/*" required>
+        </div>
+        <button type="submit">Agregar Película</button>
+    </form>
+
+    <script>
+        // Aquí puedes agregar el código JavaScript para manejar el formulario de agregar película
+
+        const movieForm = document.getElementById('movieForm');
+        movieForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Obtén los valores del formulario
+            const titulo = document.getElementById('titulo').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const actores = document.getElementById('actores').value;
+            const duracion = document.getElementById('duracion').value;
+            const clasificacion = document.getElementById('clasificacion').value;
+            const trailer = document.getElementById('trailer').value;
+            const imagen = document.getElementById('imagen').files[0];
+
+            // Aquí puedes agregar el código para enviar los datos de la película a tu servidor o base de datos
+            // Puedes utilizar una biblioteca como axios para realizar una solicitud HTTP o utilizar Firebase Realtime Database o Firestore para almacenar los datos
+
+            // Ejemplo con axios:
+            const formData = new FormData();
+            formData.append('titulo', titulo);
+            formData.append('descripcion', descripcion);
+            formData.append('actores', actores);
+            formData.append('duracion', duracion);
+            formData.append('clasificacion', clasificacion);
+            formData.append('trailer', trailer);
+            formData.append('imagen', imagen);
+
+            axios.post('/api/agregar-pelicula', formData)
+                .then((response) => {
+                    // La película se agregó correctamente
+                    console.log('Película agregada:', response.data);
+                    // Aquí puedes redirigir al usuario a otra página o realizar otras acciones
+                })
+                .catch((error) => {
+                    // Ocurrió un error al agregar la película
+                    console.error('Error al agregar la película:', error);
+                    // Aquí puedes mostrar un mensaje de error al usuario o realizar otras acciones
+                });
+        });
+    </script>
+</body>
+
+</html>
+
