@@ -28,7 +28,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
 
-<body class="main-bg">
+<body style="background-color: #242333;">
 
      <nav class="navbar navbar-expand-lg navbar-light my-nav-bg">
                 <!-- Container wrapper -->
@@ -72,9 +72,8 @@
     <div class="booking-container">
                 
         <div class="movie-container">
-            <label style="text-align: center;" id="movieName"> Select a movie</label>
             <select id="movie">
-            <option value="50" id="movieDesc">Godzilla vs Kong</option>
+            <option value="50" id="movieDesc"></option>
             </select>
         </div>
     
@@ -159,17 +158,62 @@
         </div>
     
         <p class="text">
-            You have selected <span id="count">0</span> seat for a price of RS.<span
+            Has selecionado <span id="count">0</span> asientos por el precio de MX: <span
             id="total"
             >0</span
             >
         </p>
         <button class="btn" id="factorizar">Facturizar</button>
         <form class="add-form">
-            <p class="text" id="fechaCompra" hidden></p>
-            <p class="text" id="idAsiento" hidden></p>
-            <p class="text" id="precio" hidden></p>
+            <p class="text" id="fechaFuncion" hidden></p>
+            <p class="text" id="asientosFuncion" hidden></p>
+            <p class="text" id="totalFuncion" hidden></p>
         </form>
+    </div>
+    
+    <div class="boleto-container">
+        <div class="movie-card">
+            
+            <div class="movie-header">
+                <div class="header-icon-container">
+                    <img src="img/chocodeath.jpg" alt="card-image" class="material-icons header-icon">
+                </div>
+            </div><!--movie-header-->
+
+            <div class="movie-content">
+
+                <div class="movie-content-header">
+                    <label class="movie-title" id="movieName" style="text-align: center; max-width: 200px;">Nombre</label>
+                </div>
+
+                <div class="movie-info">
+                    <div class="info-section">
+                        <label>Horario</label>
+                        <span id="horarioFuncion"></span>
+                    </div><!--time-->
+                    <div class="info-section">
+                        <label>Sala</label>
+                        <span id="salaFuncion"></span>
+                    </div><!--sala-->
+                    <div class="info-section">
+                        <label>Numero</label>
+                        <span id="asientosFuncion">0</span>
+                    </div><!--cantidad asientos-->
+
+                </div>
+                <div class="movie-info">
+                    <div class="info-section">
+                        <label>Fecha</label>
+                        <span id="fechaFuncion"></span>
+                    </div><!--time-->
+                    <div class="info-section">
+                        <label>Asientos</label>
+                        <span id="asientoSelecionado">0</span>
+                    </div><!--Asientos-->
+                </div>
+                
+            </div><!--movie-content-->
+        </div><!--movie-card-->
     </div>
 
     </main>   
