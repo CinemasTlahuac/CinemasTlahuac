@@ -18,7 +18,7 @@
                         </a>
                         <!-- Left links -->
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item logged-out">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/cartelera.html">CARTELERA</a>
                             </li>
                             <li class="nav-item logged-out">
@@ -27,10 +27,10 @@
                             <li class="nav-item logged-out">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">REGISTRARSE</a>
                             </li>
-                            <li class="nav-item logged-out">
+                            <li class="nav-item logged-in">
                                 <a class="nav-link" href="#" id="logout">CERRAR SESIÓN</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item logged-in">
                                 <a class="nav-link" href="../admin/funcion/admon-funcion.html" id="admin">ADMINISTRAR</a>
                             </li>
                         </ul>
