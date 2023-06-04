@@ -1,53 +1,126 @@
 // @ts-nocheck
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import {
-    getDocument,
-    onGetDocuments
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    GoogleAuthProvider,
+    signInWithPopup
+} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js';
+import {
+    getFirestore,
+    collection,
+    doc,
+    addDoc,
+    getDocs,
+    getDoc,
+    updateDoc,
+    deleteDoc,
+    onSnapshot,
+    setDoc
+} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js';
 
-} from './init.js';
 
-// Create a variable to store the ID of the document you want to read
-const id = 'rIPKhCUAJKP4ALnbOIaB';
+const firebaseConfig = {
+    apiKey: "AIzaSyAazv4nUxbgswnON1l1x5JG7VsBZcPsEE0",
+    authDomain: "cinemastlahuacoficial.firebaseapp.com",
+    projectId: "cinemastlahuacoficial",
+    storageBucket: "cinemastlahuacoficial.appspot.com",
+    messagingSenderId: "773845341205",
+    appId: "1:773845341205:web:dc4d99cd063f48f5016a1c",
+    measurementId: "G-PH0NHTFBJJ"
+};
 
-// Call the getDocument function
-const docRef = await getDocument('Pelicula', id);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore();
 
-// Access the data in the document
-const nombre = docRef.data().nombre;
-const sinopsis = docRef.data().sinopsis;
-const mainmovie = document.getElementById("btn-ref")
-const newLink = document.getElementById("newLink")
+export const SignUp = (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log("Registrado");
+
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+}
+
+export const Login = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log("Sesión Iniciada");
+            //cerrar menu
+            const closeLogin = document.getElementsByClassName("btn-secondary");
+            closeLogin.addEventListener("click",  async(e) => {
+              //  window.location.href = 'index.html';
+                window.close();
+
+            })
+
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+}
+
+export const SignOut = () => {
+    signOut(auth).then(() => {
+        console.log('Sesión Cerrada')
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    })
+}
+
+export const stateChanged = () => {
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            console.log(user)
+            return user;
+        } else {
+            console.log(user)
+            return user;
+        }
+    })
+}
+
+export const googleAuth = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then(result => {
+            console.log('Logueado con google')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+export const saveDocument = (coleccion, newFields) => {
+    addDoc(collection(db, coleccion), newFields);
+}
+
+export const getDocuments = (coleccion) =>
+    getDocs(collection(db, coleccion));
 
 
-// Obtain the corresponding tags via ID
-document.getElementById("movie-titulo").innerHTML = nombre;
-document.getElementById("movie-descripcion").innerHTML = sinopsis;
+export const onGetDocuments = (coleccion, callback) => {
+    onSnapshot(collection(db, coleccion), callback);
+}
 
-mainmovie.addEventListener("click",  async(e) => {
-    newLink.href = 'pelicula.html?peliculaId='+encodeURIComponent(id);
-})
+export const deleteDocuments = (coleccion, id) =>
+    deleteDoc(doc(db, coleccion, id));
 
-// Carousel 
-const carousel = document.getElementById('carousel');
-let editStatus = false;
+export const getDocument = (coleccion, id) => getDoc(doc(db, coleccion, id));
 
-// Call the onGetDocuments function to retrieve all documents from the "Pelicula" collection
-onGetDocuments("Pelicula", (querySnapshot) => {
-
-    let html = "";
-
-    // Loop through each document in the snapshot
-    querySnapshot.forEach((doc) => {
-
-        // Retrieve the "urlImagen" field from the document and log it to the console
-        const item = doc.data();
-        html += `
-					<div class="pelicula">
-                        <a href="pelicula.html?peliculaId=${doc.id}" id="idPelicula"><img src="${item.urlImagen}" alt=""></a>
-                    </div>
-            `;
-        carousel.innerHTML = html;
-    });
-
-    
-
-});
+export const updateDocument = (coleccion, id, newFields) => {
+    updateDoc(doc(db, coleccion, id), newFields);
+}

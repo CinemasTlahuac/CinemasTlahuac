@@ -1,20 +1,27 @@
 // @ts-nocheck
-
 import {
     SignUp,
     Login,
     SignOut,
-    stateChanged,
+    auth,
     googleAuth,
-    saveDocument
+    saveDocument,
+    onGetDocuments
 } from "./init.js";
+
+import {
+    onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js';
+
+import {
+    logInCheck
+} from './loginCheck.js'
 
 const signupForm = document.querySelector('#signup-form');
 const signinForm = document.querySelector('#login-form');
 const logout = document.querySelector('#logout');
 const googleLogin = document.querySelector('#googleLogin');
-const loggedOutLinks = document.querySelectorAll('.logged-out');
-const loggedInLinks = document.querySelectorAll('.logged-in');
+
 
 //REGISTRARSE
 signupForm.addEventListener('submit', (e) => {
@@ -43,6 +50,8 @@ signupForm.addEventListener('submit', (e) => {
 
     signupForm.reset();
     $('#signupModal').modal('hide')
+
+
 })
 
 //INICIAR SESIÓN
@@ -64,18 +73,43 @@ logout.addEventListener('click', (e) => {
 //GOOGLE LOGIN
 googleLogin.addEventListener('click', (e) => {
     googleAuth();
+    
 });
 
-let flag = document.addEventListener("DOMContentLoaded", stateChanged());
 
-const loginCheck = (flag) => {
-    if (flag == null) {
-        loggedInLinks.forEach(link => link.style.display = 'block');
-        loggedOutLinks.forEach(link => link.style.display = 'none');
-        console.log("mostrar logueado")
+//VERIFICAR ESTADO DE AUTENTIFICACION
+
+//
+
+onAuthStateChanged(auth, async (user) => {
+    console.log(user)
+
+    if (user) {
+        logInCheck(user);
+        const userGmail = user.email;
+        console.log(userGmail);
+
+        //verificar rol de usuario
+        onGetDocuments('Usuarios', (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const item = doc.data();
+
+                if(userGmail == item.correo) {
+                    window.location.href = "../admin/funcion/admon-funcion.html";
+                }
+                 else{
+                    console.log("No es un admin/contador")
+                 }
+
+            }); //end forEach
+          
+        });
+
+
     } else {
-        loggedInLinks.forEach(link => link.style.display = 'none');
-        loggedOutLinks.forEach(link => link.style.display = 'block');
-        console.log("no mostrar logueado")
+        logInCheck(user);
+
     }
-}
+
+})
+

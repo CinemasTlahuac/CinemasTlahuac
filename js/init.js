@@ -21,6 +21,7 @@ import {
     onSnapshot,
     setDoc
 } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js';
+
 import {
     getStorage,
     ref as sRef,
@@ -39,7 +40,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 const db = getFirestore();
 
 export const SignUp = (email, password) => {
@@ -82,9 +83,10 @@ export const stateChanged = () => {
         if (user) {
             console.log(user)
             return user;
+
         } else {
             console.log(user)
-            return user;
+            return null;
         }
     })
 }
@@ -94,6 +96,7 @@ export const googleAuth = () => {
     signInWithPopup(auth, provider)
         .then(result => {
             console.log('Logueado con google')
+             window.location.href = 'index.html';
         })
         .catch(err => {
             console.log(err)
@@ -120,3 +123,4 @@ export const getDocument = (coleccion, id) => getDoc(doc(db, coleccion, id));
 export const updateDocument = (coleccion, id, newFields) => {
     updateDoc(doc(db, coleccion, id), newFields);
 }
+
