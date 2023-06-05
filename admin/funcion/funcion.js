@@ -17,7 +17,6 @@ const selectElement = document.getElementById('options');
 let selectedPeliculaOptionValue = '1';
 let selectedHorarioOptionValue = '1';
 let selectedSalaOptionValue = '1';
-
 let editStatus = false;
 let id = '';
 
@@ -100,6 +99,7 @@ window.addEventListener('DOMContentLoaded', async() => {
             `;
         });
 
+        
         listContainer.innerHTML = html;
 
         const btnsDelete = listContainer.querySelectorAll('.btn-delete');
@@ -169,7 +169,8 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
             descripcion: descripcion.value,
             fk_idPelicula: selectedPeliculaOptionValue,
             fk_idHorario: selectedHorarioOptionValue,
-            fk_idSala: selectedSalaOptionValue
+            fk_idSala: selectedSalaOptionValue,
+
         });
     } else {
         updateDocument(

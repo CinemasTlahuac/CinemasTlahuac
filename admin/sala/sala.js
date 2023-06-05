@@ -10,6 +10,7 @@ import {
 
 const addForm = document.getElementById('add-form');
 const listContainer = document.getElementById('list-container');
+const asientosArray=[];
 let editStatus = false;
 let id = '';
 
@@ -33,6 +34,14 @@ window.addEventListener('DOMContentLoaded', async() => {
                 </div>
             `;
         });
+        onGetDocuments('Asiento', (querySnapshot) => {
+    
+            querySnapshot.forEach((doc) => {
+                    asientosArray.push(doc.data());
+            });
+        })
+
+        console.log(asientosArray)
 
         listContainer.innerHTML = html;
 
@@ -75,7 +84,8 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
         saveDocument('Sala', {
             idSala: idSala.value,
             descripcion: descripcion.value,
-            asientosDisponibles: asientosDisponibles.value
+            asientosDisponibles: asientosDisponibles.value,
+            asientos: asientosArray
         });
     } else {
         updateDocument(

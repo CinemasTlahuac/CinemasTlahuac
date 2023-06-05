@@ -83,7 +83,8 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
             id, {
                 idAsiento: idAsiento.value,
                 fila: fila.value,
-                columna: columna.value
+                columna: columna.value,
+                isActive: true
             });
 
         document.getElementById('btn-save').value = "Registrar";
