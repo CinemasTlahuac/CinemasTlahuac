@@ -17,12 +17,36 @@ var totalFuncion = document.getElementById("totalFuncion");
 var asientosFuncion = document.getElementById("asientosFuncion");
 var asientoSelecionado = document.getElementById("asientoSelecionado");
 var salaFuncion = document.getElementById("salaFuncion");
+const contenedorQR = document.getElementById('contenedorQR');
 
+// Generar fecha
 const date = new Date();
 const localDate = date.toLocaleDateString();
 fechaFuncion.innerHTML = localDate;
-console.log(localDate)
 
+// Generar folio
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomString = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString += characters.charAt(randomIndex);
+  }
+
+  return randomString;
+}
+
+// Check if the random string exists in localStorage
+let randomString = localStorage.getItem('randomString');
+
+if (!randomString) {
+  // Generate a new random string
+  randomString = generateRandomString(10);
+  localStorage.setItem('randomString', randomString);
+}
+
+console.log(randomString);
 
 populateUI();
 let ticketPrice = +movieSelect.value;
@@ -134,7 +158,6 @@ document.getElementById("movieDesc").innerHTML = movieDesc;
 document.getElementById("horarioFuncion").innerHTML = movieHorario;
 salaFuncion.innerHTML = movieSala;
 
-
 document.getElementById("factorizar").addEventListener('click', (e) => {
   e.preventDefault()
 
@@ -142,22 +165,34 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
   movieDesc 
 
   //MOVIE TICKET INFORMATION SAVED
-  
+
   if (!editStatus) {
       saveDocument('Boleto', {
           fk_idFuncion: movieName,
           precio: totalPrices,
           cantidadBoletos: totalAsientos,
-          funcionHorario: localDate,
+          funcionHorario: movieHorario,
+          funcionFecha: localDate,
           funcionSala: movieSala,
           idAsiento: seatId,
-          descripcion: movieDesc
+          descripcion: randomString,
+          pagado: false
       });
+
+      const Pago_Boleto = `Clave De Transferencia: 0723206076552292709
+      Precio total: ${totalPrices}
+      Folio: ${randomString}`;
+
+      //QR INFORMATION
+      new QRCode(contenedorQR, Pago_Boleto);
+      console.log(Pago_Boleto);
+
+
   } 
-  
   
   else {
      console.log("Error al almacenar")
   }
+
 });
 
