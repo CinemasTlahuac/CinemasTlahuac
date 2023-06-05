@@ -94,13 +94,15 @@ onAuthStateChanged(auth, async (user) => {
             querySnapshot.forEach((doc) => {
                 const item = doc.data();
 
-                if(userGmail == item.correo) {
+                if((userGmail == item.correo)&&(item.fk_idRol=='1')) {
                     window.location.href = "../admin/funcion/admon-funcion.html";
                 }
-                 else{
+                 if((userGmail == item.correo)&&(item.fk_idRol=='2')){
                     console.log("No es un admin/contador")
                  }
-
+                 if((userGmail == item.correo)&&(item.fk_idRol=='3')){
+                    console.log("Cliente")
+                 }
             }); //end forEach
           
         });
@@ -112,4 +114,3 @@ onAuthStateChanged(auth, async (user) => {
     }
 
 })
-
