@@ -3,6 +3,7 @@ import {
   getDocument,
   getDocuments,
   onGetDocuments,
+  auth
 } from './init.js';
 
 
@@ -18,6 +19,7 @@ var asientosFuncion = document.getElementById("asientosFuncion");
 var asientoSelecionado = document.getElementById("asientoSelecionado");
 var salaFuncion = document.getElementById("salaFuncion");
 const contenedorQR = document.getElementById('contenedorQR');
+const asientos = document.querySelectorAll('.seat');
 
 // Generar fecha
 const date = new Date();
@@ -158,6 +160,13 @@ document.getElementById("movieDesc").innerHTML = movieDesc;
 document.getElementById("horarioFuncion").innerHTML = movieHorario;
 salaFuncion.innerHTML = movieSala;
 
+// LLenar los asientos
+
+
+console.log(movieAsientos);
+
+
+
 document.getElementById("factorizar").addEventListener('click', (e) => {
   e.preventDefault()
 
@@ -186,8 +195,6 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
       //QR INFORMATION
       new QRCode(contenedorQR, Pago_Boleto);
       console.log(Pago_Boleto);
-
-
   } 
   
   else {
@@ -195,4 +202,3 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
   }
 
 });
-
