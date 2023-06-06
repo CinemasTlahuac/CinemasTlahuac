@@ -14,9 +14,11 @@ const listPeliculas = document.getElementById('peliculas');
 const listSalas = document.getElementById('salas');
 const listHorarios = document.getElementById('horarios');
 const selectElement = document.getElementById('options');
+var disponible = "disponible"; // replace "some value" with the actual value you want
 let selectedPeliculaOptionValue = '1';
 let selectedHorarioOptionValue = '1';
 let selectedSalaOptionValue = '1';
+
 
 let editStatus = false;
 let id = '';
@@ -165,12 +167,18 @@ document.getElementById("btn-save").addEventListener('click', (e) => {  //cada v
 
     if (!editStatus) {
 
+        var numeroAsientos = [];
+        for (var i = 0; i < 40; i++) {
+            numeroAsientos.push(disponible);
+        }
+
         saveDocument('Funcion', {
             idFuncion: idFuncion.value,
             descripcion: descripcion.value,
             fk_idPelicula: selectedPeliculaOptionValue,
             fk_idHorario: selectedHorarioOptionValue,
-            fk_idSala: selectedSalaOptionValue
+            fk_idSala: selectedSalaOptionValue,
+            numeroAsientos: numeroAsientos
         });
     } else {
         updateDocument(
