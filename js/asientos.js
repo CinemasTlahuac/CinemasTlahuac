@@ -1,11 +1,36 @@
 import {
   saveDocument,
-  getDocument
+  getDocument,
+  updateDocument,
+  auth
+
 } from './init.js';
+
+import {
+  onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js';
+
+import {
+  logInCheck
+} from './loginCheck.js'
+
+let userGmail
+
+onAuthStateChanged(auth, async (user) => {
+  console.log(user)
+
+  if (user) {
+      logInCheck(user);
+      userGmail = user.email;
+      console.log(userGmail);
+  } else {
+    console.log('Usuario no logeado, ingresar a su cuenta')
+  }
+
+})
 
 var urlParams = ""
 var funcionId = ""
-const addForm = document.getElementById('add-form');
 let editStatus = false;
 
 
@@ -15,6 +40,7 @@ funcionId = urlParams.get('funcionId');
 
 // Call the getDocument function
 const docRef = await getDocument('Funcion', funcionId);
+var movieAsientos = docRef.data().numeroAsientos;
 
 var seatId = 0;
 const container = document.querySelector('.seats');
@@ -23,10 +49,10 @@ const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
 var fechaFuncion = document.getElementById("fechaFuncion");
-var asientosFuncion = document.getElementById("asientosFuncion");
 var salaFuncion = document.getElementById("salaFuncion");
 const contenedorQR = document.getElementById('contenedorQR');
 const asientos = document.querySelectorAll('.seat');
+let secondClassValuesArray
 
 // Generar fecha
 const date = new Date();
@@ -57,7 +83,32 @@ if (!randomString) {
 
 console.log(randomString);
 
-populateUI();
+// LLenar los asientos
+// En este código, usamos document.getElementsByClassName("asiento disponible") para recuperar todos los elementos que tienen las clases "asiento" y "disponible".
+// Luego, iteramos sobre cada elemento usando un bucle for. Dentro del ciclo, recuperamos el elemento actual usando elementos[i].
+//  Accedemos a la propiedad classList del elemento para manipular sus clases. Usamos item(1) para obtener la segunda clase en la lista de clases.
+//  Finalmente, usamos el método replace() en classList para reemplazar la segunda clase con "seleccionado" usando element.classList.replace(element.classList.item(1), "selected").
+  
+console.log(movieAsientos); //Arreglo de la base de datos
+
+function valoresAsientosDeBD(movieAsientos) {
+
+  for (var i = 0; i < asientos.length; i++) {
+    var seat = asientos[i];
+    var classToRemove = seat.classList.item(1);
+
+    if (movieAsientos[i] == "selected"){
+      seat.classList.replace(classToRemove, "sold");
+    } else {
+      seat.classList.replace(classToRemove, movieAsientos[i]);
+    }
+
+  }
+  
+}
+
+valoresAsientosDeBD(movieAsientos);
+
 let ticketPrice = +movieSelect.value;
 var totalPrices ="";
 var totalAsientos =0;
@@ -78,6 +129,9 @@ function updateSelectedCount() {
 
   localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex));
 
+  secondClassValuesArray = AsientosDisponibilidad();
+  console.log(secondClassValuesArray);
+
   //copy selected seats into arr
   // map through array
   //return new array of indexes
@@ -91,25 +145,6 @@ function updateSelectedCount() {
 
 }
 
-// get data from localstorage and populate ui
-function populateUI() {
-  const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
-
-  if (selectedSeats !== null && selectedSeats.length > 0) {
-    seats.forEach((seat, index) => {
-      if (selectedSeats.indexOf(index) > -1) {
-        seat.classList.add('selected');
-        
-      }
-    });
-  }
-
-  const selectedMovieIndex = localStorage.getItem('selectedMovieIndex');
-
-  if (selectedMovieIndex !== null) {
-    movieSelect.selectedIndex = selectedMovieIndex;
-  }
-}
 
 // Movie select event
 movieSelect.addEventListener('change', (e) => {
@@ -119,14 +154,27 @@ movieSelect.addEventListener('change', (e) => {
 });
 
 // Seat click event
-container.addEventListener('click', (e) => {
-  if (e.target.classList.contains('seat') && !e.target.classList.contains('occupied')) {
-    e.target.classList.toggle('selected');
+container.addEventListener('click', (e) => { //invocar metodo al hacer click en un elemento dentro de container
+  const target = e.target;  //crear una variable invocar el elemento selecionado
+  if (target.classList.contains('seat') && !target.classList.contains('occupied')) { //si el elemento contiene la clase seat y la clase es diferente a occupied
+                                                        //procede con el siguiente procedimiento
+      const classes = target.classList;                 //se crea una variable para almacenar la clase del elemento selecionado
+      const currentClass = classes.item(1);             //se obtiene la clase ubicada en el index 1 (segunda clase)
+
+      if (currentClass === 'disponible') {            // si la clase actual es disponible se cambia a selecionado
+        classes.replace('disponible', 'selected');
+      } 
+      
+      else if (currentClass === 'selected') {       // si la clase actual es selecionado se cambia a disponible
+        classes.replace('selected', 'disponible');
+      }
+
     updateSelectedCount();
     seatId;
     console.log(seatId);
     //establecer asientos selecionados
     asientoSelecionado.innerHTML = seatId;
+    
   }
 });
 
@@ -146,22 +194,20 @@ var movieDesc = docRef.data().descripcion;
 var movieHorario = docRef.data().fk_idHorario;
 var movieSala = docRef.data().fk_idSala;
 var movieSala = docRef.data().fk_idSala;
-var movieAsientos = docRef.data().numeroAsientos;
 
-// LLenar los asientos
-console.log(movieAsientos);
-function valoresAsientosDeBD(movieAsientos) {
 
-  for (var i = 0; i < asientos.length; i++) {
-    var seat = asientos[i];
-    var seatClass = movieAsientos[i]; // Assuming the index of movieAsientos corresponds to the index of asientos
+function AsientosDisponibilidad() {
 
-    seat.classList.add(seatClass);
+  const secondClassValues = [];
+
+  for (let i = 0; i < asientos.length; i++) {
+    const classes = asientos[i].classList;
+    const secondClass = classes.item(1);
+    secondClassValues.push(secondClass);
   }
-  
-}
 
-valoresAsientosDeBD(movieAsientos);
+  return secondClassValues;
+}
 
 
 // Obtain the corresponding tags via ID
@@ -192,6 +238,12 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
           pagado: false
       });
 
+      updateDocument(
+        'Funcion',
+        funcionId, {
+          numeroAsientos: secondClassValuesArray
+        });
+
       const Pago_Boleto = `Clave De Transferencia: 0723206076552292709
       Precio total: ${totalPrices}
       Folio: ${randomString}`;
@@ -199,23 +251,25 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
       //QR INFORMATION
       new QRCode(contenedorQR, Pago_Boleto);
       console.log(Pago_Boleto);
+
+      //Send Email
+      Email.send({
+        Host : "smtp.elasticemail.com",
+        Username : "cinemastlahuacofmx@gmail.com",
+        Password : "513ABAF1AD22793FCB7D067C33DABBE39164",
+        To : userGmail,
+        From : "cinemastlahuacofmx@gmail.com",
+        Subject : "Informacion del Pago de cuenta Interbancaria",
+        Body : Pago_Boleto
+  
+        }).then(
+        message => alert("Se ha enviado un correo con la informacion Interbancaria con sus datos correspondientes")
+      );
   } 
   
   else {
      console.log("Error al almacenar")
   }
 
-    Email.send({
-      Host : "smtp.elasticemail.com",
-      Username : "cinemastlahuacofmx@gmail.com",
-      Password : "513ABAF1AD22793FCB7D067C33DABBE39164",
-      To : userGmail,
-      From : "cinemastlahuacofmx@gmail.com",
-      Subject : "Informacion del Pago de cuenta Interbancaria",
-      Body : Pago_Boleto
-
-      }).then(
-      message => alert("Se ha enviado un la informacion Interbancaria con sus datos correspondientes")
-    );
-
 });
+
