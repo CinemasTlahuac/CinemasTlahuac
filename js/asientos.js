@@ -1,11 +1,20 @@
 import {
   saveDocument,
-  getDocument,
-  getDocuments,
-  onGetDocuments,
-  auth
+  getDocument
 } from './init.js';
 
+var urlParams = ""
+var funcionId = ""
+const addForm = document.getElementById('add-form');
+let editStatus = false;
+
+
+// Extract the query parameter value
+urlParams = new URLSearchParams(window.location.search);
+funcionId = urlParams.get('funcionId');
+
+// Call the getDocument function
+const docRef = await getDocument('Funcion', funcionId);
 
 var seatId = 0;
 const container = document.querySelector('.seats');
@@ -14,9 +23,7 @@ const count = document.getElementById('count');
 const total = document.getElementById('total');
 const movieSelect = document.getElementById('movie');
 var fechaFuncion = document.getElementById("fechaFuncion");
-var totalFuncion = document.getElementById("totalFuncion");
 var asientosFuncion = document.getElementById("asientosFuncion");
-var asientoSelecionado = document.getElementById("asientoSelecionado");
 var salaFuncion = document.getElementById("salaFuncion");
 const contenedorQR = document.getElementById('contenedorQR');
 const asientos = document.querySelectorAll('.seat');
@@ -87,6 +94,7 @@ function updateSelectedCount() {
 // get data from localstorage and populate ui
 function populateUI() {
   const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+
   if (selectedSeats !== null && selectedSeats.length > 0) {
     seats.forEach((seat, index) => {
       if (selectedSeats.indexOf(index) > -1) {
@@ -116,10 +124,9 @@ container.addEventListener('click', (e) => {
     e.target.classList.toggle('selected');
     updateSelectedCount();
     seatId;
+    console.log(seatId);
     //establecer asientos selecionados
     asientoSelecionado.innerHTML = seatId;
-    asientosFuncion.innerHTML = count;
-    totalFuncion.innerHTML = total;
   }
 });
 
@@ -127,31 +134,34 @@ container.addEventListener('click', (e) => {
 updateSelectedCount();
 
 //DISPLAY MOVIE TICKET
-
 console.log(movieName);
 console.log(totalPrices);
 console.log(seatId);
 console.log(movieDesc);
 
 
-var urlParams = ""
-var funcionId = ""
-const addForm = document.getElementById('add-form');
-let editStatus = false;
-
-
-// Extract the query parameter value
-urlParams = new URLSearchParams(window.location.search);
-funcionId = urlParams.get('funcionId');
-
-// Call the getDocument function
-const docRef = await getDocument('Funcion', funcionId);
-
 // Access the data in the document
 var movieName = docRef.data().fk_idPelicula;
 var movieDesc = docRef.data().descripcion;
 var movieHorario = docRef.data().fk_idHorario;
 var movieSala = docRef.data().fk_idSala;
+var movieSala = docRef.data().fk_idSala;
+var movieAsientos = docRef.data().numeroAsientos;
+
+// LLenar los asientos
+console.log(movieAsientos);
+function valoresAsientosDeBD(movieAsientos) {
+
+  for (var i = 0; i < asientos.length; i++) {
+    var seat = asientos[i];
+    var seatClass = movieAsientos[i]; // Assuming the index of movieAsientos corresponds to the index of asientos
+
+    seat.classList.add(seatClass);
+  }
+  
+}
+
+valoresAsientosDeBD(movieAsientos);
 
 
 // Obtain the corresponding tags via ID
@@ -159,12 +169,6 @@ document.getElementById("movieName").innerHTML = movieName;
 document.getElementById("movieDesc").innerHTML = movieDesc;
 document.getElementById("horarioFuncion").innerHTML = movieHorario;
 salaFuncion.innerHTML = movieSala;
-
-// LLenar los asientos
-
-
-console.log(movieAsientos);
-
 
 
 document.getElementById("factorizar").addEventListener('click', (e) => {
@@ -201,4 +205,18 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
      console.log("Error al almacenar")
   }
 
+    Email.send({
+      Host : "smtp.elasticemail.com",
+      Username : "cinemastlahuacofmx@gmail.com",
+      Password : "513ABAF1AD22793FCB7D067C33DABBE39164",
+      To : userGmail,
+      From : "cinemastlahuacofmx@gmail.com",
+      Subject : "Informacion del Pago de cuenta Interbancaria",
+      Body : Pago_Boleto
+
+      }).then(
+      message => alert("Se ha enviado un la informacion Interbancaria con sus datos correspondientes")
+    );
+
 });
+
