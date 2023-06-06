@@ -219,4 +219,3 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
     );
 
 });
-
