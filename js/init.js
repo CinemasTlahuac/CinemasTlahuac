@@ -7,7 +7,8 @@ import {
     signOut,
     onAuthStateChanged,
     GoogleAuthProvider,
-    signInWithPopup
+    signInWithPopup,
+    sendPasswordResetEmail
 } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js';
 import {
     getFirestore,
@@ -42,6 +43,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const db = getFirestore();
+
+export const ResetPassword = (email) => {
+    sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log("Correo enviado exitosamente");
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        })
+}
 
 export const SignUp = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
