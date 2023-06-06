@@ -63,6 +63,7 @@
                         <button type="button" class="btn btn-primary btn-block pt-2" id="googleLogin">
                             Login with Google
                         </button>
+                        <a href="recuperar.html">¿Has olvidado tu contraseña?</a>
                     </form>
                 </div>
             </div>
