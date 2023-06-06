@@ -17,6 +17,13 @@ let selectedOptionValue = '3';
 let editStatus = false;
 let id = '';
 
+function validateEmail(email, password) {
+    const emailPattern  = /\.com$/i; // Match ".com" at the end (case-insensitive)
+    const isEmailValid = emailPattern.test(email);
+    const isPasswordValid = password.length >= 10;
+    return isEmailValid && isPasswordValid;
+  }
+
 window.addEventListener('DOMContentLoaded', async() => {
 
     selectElement.addEventListener("change", () => {
@@ -111,24 +118,11 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
     const direccion = addForm['direccion'];
     const options = addForm['options'];
     const selectedIndex = options.selectedIndex;
+    
+    if(validateEmail(correo.value, password.value) != false){
+        if (!editStatus) {
 
-    if (!editStatus) {
-
-        saveDocument('Usuarios', {
-            idUsuario: idUsuario.value,
-            correo: correo.value,
-            password: password.value,
-            nombre: nombre.value,
-            apellidoP: apellidoP.value,
-            apellidoM: apellidoM.value,
-            fechaNacimiento: fechaNacimiento.value,
-            direccion: direccion.value,
-            fk_idRol: selectedOptionValue
-        });
-    } else {
-        updateDocument(
-            'Usuarios',
-            id, {
+            saveDocument('Usuarios', {
                 idUsuario: idUsuario.value,
                 correo: correo.value,
                 password: password.value,
@@ -139,13 +133,34 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
                 direccion: direccion.value,
                 fk_idRol: selectedOptionValue
             });
-        console.log("fk_idRol: " + fk_idRol.value)
+        } else {
+            updateDocument(
+                'Usuarios',
+                id, {
+                    idUsuario: idUsuario.value,
+                    correo: correo.value,
+                    password: password.value,
+                    nombre: nombre.value,
+                    apellidoP: apellidoP.value,
+                    apellidoM: apellidoM.value,
+                    fechaNacimiento: fechaNacimiento.value,
+                    direccion: direccion.value,
+                    fk_idRol: selectedOptionValue
+                });
+            console.log("fk_idRol: " + fk_idRol.value)
+    
+            document.getElementById('btn-save').value = "Registrar";
+            editStatus = false;
+        }
+    
+        addForm.reset();
 
-        document.getElementById('btn-save').value = "Registrar";
-        editStatus = false;
+    } else {
+        document.getElementById("mensajeError").innerText = "Error en contraseña y correo. El password debe ser 10 caracteres"
+        setTimeout(function() {
+            document.getElementById("mensajeError").innerText = "";
+          }, 5000);
     }
-
-    addForm.reset();
 });
 
 document.getElementById("btn-clean").addEventListener('click', (e) => {
