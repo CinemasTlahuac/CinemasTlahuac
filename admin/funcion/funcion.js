@@ -17,6 +17,7 @@ const selectElement = document.getElementById('options');
 let selectedPeliculaOptionValue = '1';
 let selectedHorarioOptionValue = '1';
 let selectedSalaOptionValue = '1';
+
 let editStatus = false;
 let id = '';
 
@@ -40,7 +41,7 @@ window.addEventListener('DOMContentLoaded', async() => {
         console.log(selectedSalaOptionValue)
     })
 
-    onGetDocuments('Pelicula', (querySnapshot) => {
+    onGetDocuments('Pelicula', (querySnapshot) => { //obtener collecion de pelicula
 
         let htmlPelicula = "";
 
@@ -79,7 +80,7 @@ window.addEventListener('DOMContentLoaded', async() => {
         listHorarios.innerHTML = htmlHorario;
     })
 
-    onGetDocuments('Funcion', (querySnapshot) => {
+    onGetDocuments('Funcion', (querySnapshot) => { //obtener collecion de funcion para recuperar valores a actualizar de acuerdo con id
 
         let html = "";
 
@@ -99,7 +100,6 @@ window.addEventListener('DOMContentLoaded', async() => {
             `;
         });
 
-        
         listContainer.innerHTML = html;
 
         const btnsDelete = listContainer.querySelectorAll('.btn-delete');
@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded', async() => {
             })
         });
 
-        btnsEdit.forEach((btn) => {
+        btnsEdit.forEach((btn) => {                     //eliminar documento
             btn.addEventListener('click', async(e) => {
                 const doc = await getDocument('Funcion', e.target.dataset.id);
                 const item = doc.data();
@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', async() => {
     });
 });
 
-listPeliculas.addEventListener("change", () => {
+listPeliculas.addEventListener("change", () => {    //cada vez que se actualiza la collecion de pelicula se actualiza el dropdown
     const selectedPeliculaOptionValue = listPeliculas.options[listPeliculas.selectedIndex].value;
     console.log(selectedPeliculaOptionValue)
     return selectedPeliculaOptionValue;
@@ -150,7 +150,8 @@ listSalas.addEventListener("change", () => {
     return selectedSalaOptionValue;
 })
 
-document.getElementById("btn-save").addEventListener('click', (e) => {
+document.getElementById("btn-save").addEventListener('click', (e) => {  //cada vez que se haga click el btn-save se guarda los valores.
+                                                                //dependiendo de la variable estatus se actualiza o guarda el documento
     e.preventDefault()
 
     const idFuncion = addForm['idFuncion'];
@@ -169,8 +170,7 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
             descripcion: descripcion.value,
             fk_idPelicula: selectedPeliculaOptionValue,
             fk_idHorario: selectedHorarioOptionValue,
-            fk_idSala: selectedSalaOptionValue,
-
+            fk_idSala: selectedSalaOptionValue
         });
     } else {
         updateDocument(
@@ -187,10 +187,10 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
         editStatus = false;
     }
 
-    addForm.reset();
+    addForm.reset();    //limpiar formulario
 });
 
-document.getElementById("btn-clean").addEventListener('click', (e) => {
+document.getElementById("btn-clean").addEventListener('click', (e) => { //limpiar al hacer click en btn
     e.preventDefault();
 
     var idFuncion = document.getElementById("idFuncion");
