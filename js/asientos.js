@@ -219,6 +219,7 @@ salaFuncion.innerHTML = movieSala;
 
 document.getElementById("factorizar").addEventListener('click', (e) => {
   e.preventDefault()
+  modal.style.display = "block";
 
   movieName
   movieDesc 
@@ -271,5 +272,29 @@ document.getElementById("factorizar").addEventListener('click', (e) => {
      console.log("Error al almacenar")
   }
 
+});
+
+const modal = document.getElementById("modal");
+const closeModalBtn = document.getElementsByClassName("close")[0];
+const confirmBtn = document.getElementById("confirmBtn");
+
+closeModalBtn.addEventListener("click", function() {
+  modal.style.display = "none";
+  window.location.href = "index.html";
+});
+
+window.addEventListener("click", function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+    window.location.href = "index.html";
+  }
+});
+
+// Handle confirm button click
+confirmBtn.addEventListener("click", function() {
+  // Perform desired action or trigger further processing
+  console.log("Confirmed");
+  modal.style.display = "none";
+  window.location.href = "index.html";
 });
 
