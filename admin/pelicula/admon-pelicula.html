@@ -9,6 +9,9 @@
     <link rel="icon" type="image/x-icon" href="../../img/icon.ico" />
     <title>Administrar Películas</title>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 </head>
 
 <body>
@@ -43,15 +46,14 @@
                 <div class="user-row">
                     <!-- LABEL E INPUT PARA IMAGEN-->
                     <div class="column">
-                        <label for="nombre">Image Name:</label>
-                        <input type="text" id="namebox">
-                        <label id="extlab"></label><br><br>
-                        <img id="myimg" class="pelicula-img">
-                        <label id="unprogress"></label><br><br>
-
-                        <button id="Selectbtn">Selecionar Imagen</button>
-                        <button id="Downbtn">Retrieve Imagen</button>
+                        <input type="file" id="image-file">
+                        
+                        <img id="image-preview" class="image-box" src="" alt="Preview Image">
+                        <span id="image-name"></span>
+                      
+                        <button id="upload-button" class="btn-upload">Upload</button>
                     </div>
+                    
                     <div class="column">
                         <h2 style="text-align: center; padding-bottom: 1em;">NUEVO / EDITAR</h2>
                         <label for="idPelicula">ID de Película:</label>
