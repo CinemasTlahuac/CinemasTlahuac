@@ -1,4 +1,6 @@
 // @ts-nocheck
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+
 import {
     saveDocument,
     getDocument,
@@ -8,6 +10,34 @@ import {
     updateDocument
 } from '../../js/init.js';
 
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAazv4nUxbgswnON1l1x5JG7VsBZcPsEE0",
+    authDomain: "cinemastlahuacoficial.firebaseapp.com",
+    projectId: "cinemastlahuacoficial",
+    storageBucket: "cinemastlahuacoficial.appspot.com",
+    messagingSenderId: "773845341205",
+    appId: "1:773845341205:web:dc4d99cd063f48f5016a1c",
+    measurementId: "G-PH0NHTFBJJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore();
+
+
 const addForm = document.getElementById('add-form');
 const listContainer = document.getElementById('list-container');
 let editStatus = false;
@@ -15,13 +45,73 @@ let id = '';
 var files = [];
 var reader = new FileReader();
 
-var namebox = document.getElementById('namebox');
-var extlab = document.getElementById('extlab');
-var myimg = document.getElementById('myimg');
-var proglab = document.getElementById('unprogress');
-var Selectbtn = document.getElementById('Selectbtn');
-var Uploadbtn = document.getElementById('btn-save');
-var Downbtn = document.getElementById('Downbtn');
+
+var Uploadbtn = document.getElementById('upload-button');
+
+//IMAGENES// Create a root reference
+const storage = getStorage();
+
+const inputImage = document.getElementById('image-file');
+inputImage.type = 'file';
+const previewImage = document.getElementById('image-preview');
+var FileName = document.getElementById("image-name");
+let newImageUrl
+
+inputImage.onchange = e =>{
+    files = e.target.files;
+    const Imgfile = inputImage.files[0];
+
+    FileName = Imgfile;
+    if (FileName) {
+
+        reader.addEventListener('load', () => {
+        previewImage.setAttribute('src', reader.result);
+
+        console.log(`Selected file name: ${FileName.name}`);
+        });
+    
+      }
+       reader.readAsDataURL(Imgfile);
+}
+
+Uploadbtn.addEventListener("click", function() {
+    if (FileName) {
+
+        const ImageName = "images/"+FileName.name;
+        const imageRef = ref(storage, ImageName);
+    
+        uploadBytes(imageRef, FileName).then((snapshot) => {
+        urlDownload(ImageName);    
+
+        console.log('Uploaded a blob or file!');
+
+        });
+      }
+  });
+
+function urlDownload(storageRef) {
+    const path = ref(storage, storageRef);
+    getDownloadURL(path)
+    .then((url) => {
+    // Do something with the URL ...
+    SaveURLFirestore(storageRef)
+    newImageUrl = String(url);
+    console.log(newImageUrl);
+  })
+}
+   //-----------SAVE TO FIRESTORE DATABASE ----------------//
+
+   async function SaveURLFirestore(url){
+    const name = FileName.name; //name es el nombre de la ID, AJUSTALO AL CORRECTO
+
+    var ref = doc(db, "Peliculas/"+name); //imglINKS IS NAME OF THE COLLECTION
+    await setDoc(ref, {
+
+        ImageName: (name),
+        ImageURL: url
+    });
+}
+
 
 var input = document.createElement('input');
 input.type = 'file';
@@ -60,6 +150,7 @@ window.addEventListener('DOMContentLoaded', async() => {
         });
 
         btnsEdit.forEach((btn) => {
+
             btn.addEventListener('click', async(e) => {
                 const doc = await getDocument('Pelicula', e.target.dataset.id);
                 const item = doc.data();
@@ -76,6 +167,7 @@ window.addEventListener('DOMContentLoaded', async() => {
                 addForm["duracion"].value = item.duracion;
                 addForm["esEstreno"].value = item.esEstreno;
                 addForm["activo"].value = item.activo;
+                addForm["image-preview"].src = item.urlImagen;
 
                 editStatus = true;
                 id = doc.id;
@@ -100,6 +192,7 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
     const duracion = addForm["duracion"];
     const esEstreno = addForm["esEstreno"];
     const activo = addForm["activo"];
+    const urlImagen = addForm["image-preview"];
 
     if (!editStatus) {
         saveDocument('Pelicula', {
@@ -113,7 +206,8 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
             urlTrailer: urlTrailer.value,
             duracion: duracion.value,
             esEstreno: esEstreno.value,
-            activo: activo.value
+            activo: activo.value,
+            urlImagen: newImageUrl
         });
     } else {
         updateDocument(
@@ -129,7 +223,8 @@ document.getElementById("btn-save").addEventListener('click', (e) => {
                 urlTrailer: urlTrailer.value,
                 duracion: duracion.value,
                 esEstreno: esEstreno.value,
-                activo: activo.value
+                activo: activo.value,
+                urlImagen: newImageUrl
             });
 
         document.getElementById('btn-save').value = "Registrar";
@@ -153,7 +248,7 @@ document.getElementById("btn-clean").addEventListener('click', (e) => {
     var duracion = document.getElementById("duracion");
     var esEstreno = document.getElementById("esEstreno");
     var activo = document.getElementById("activo");
-
+    var urlImagen = document.getElementById("image-preview");
 
     if (!editStatus) {
         idPelicula.value = "";
@@ -167,6 +262,7 @@ document.getElementById("btn-clean").addEventListener('click', (e) => {
         duracion.value = "";
         esEstreno.value = "";
         activo.value = "";
+        urlImagen.src = "";
     } else {
         idPelicula.value = "";
         nombre.value = "";
@@ -179,44 +275,9 @@ document.getElementById("btn-clean").addEventListener('click', (e) => {
         duracion.value = "";
         esEstreno.value = "";
         activo.value = "";
+        urlImagen.src = "";
 
         editStatus = false;
         document.getElementById('btn-save').value = "Registrar";
     }
 });
-
-//IMAGENES
-input.onchange = e => {
-
-    files = e.target.files;
-
-    var extention = GetFileExt(files[0]); //only select one file
-    var name = GetFileName(files[0]);
-
-    namebox.value = name;
-    extlab.innerHTML = extention;
-
-    reader.readAsDataURL(files[0]);
-}
-
-reader.onload = function() {
-    myimg.src = reader.result;
-}
-
-// ---------------SELECTION ----------------//
-
-Selectbtn.onclick = function() {
-    input.click();
-}
-
-function GetFileExt(file) {
-    var temp = file.name.split('.');
-    var ext = temp.slice((temp.length - 1), (temp.length));
-    return '.' + ext[0];
-}
-
-function GetFileName(file) {
-    var temp = file.name.split('.');
-    var fname = temp.slice(0, -1).join('.');
-    return fname;
-}
