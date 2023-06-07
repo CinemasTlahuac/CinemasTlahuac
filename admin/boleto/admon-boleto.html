@@ -43,25 +43,38 @@
                 <div class="user-row">
                     <div class="column">
                         <h2 style="text-align: center; padding-bottom: 1em;">NUEVO / EDITAR</h2>
-                        <label for="idBoleto">ID de Boleto:</label>
-                        <input type="text" id="idBoleto" name="idBoleto" required>
+                        <label for="idBoleto">Cantidad Boleto:</label>
+                        <input type="number" id="idBoleto" name="idBoleto" required>
 
-                        <label for="descripcion">Descripción:</label>
+                        <label for="descripcion">Folio:</label>
                         <input type="text" id="descripcion" name="descripcion" required>
 
-                        <label for="idAsiento">Asiento:</label>
+                        <label for="idAsiento">Asientos:</label>
                         <input type="text" id="idAsiento" name="idAsiento" required>
 
-                        <label for="fechaCompra">Fecha de Compra:</label>
-                        <input type="date" id="fechaCompra" name="fechaCompra" required>
+                        <label for="funcionSala">Sala:</label>
+                        <input type="text" id="funcionSala" name="funcionSala" required>
+
+                        <label for="funcionFecha">Fecha de Compra:</label>
+                        <input type="date" id="funcionFecha" name="funcionFecha" required>
                         </select>
 
-                        <label for="funcion">Función:</label>
-                        <select id="funcion" name="funcion" required>
+                        <label for="fk_idFuncion">Función:</label>
+                        <select id="fk_idFuncion" name="fk_idFuncion" required>
+                        </select>
+
+                        <label for="funcionHorario">Horario:</label>
+                        <select id="funcionHorario" name="funcionHorario" required>
+                        </select>
+
+                        <label for="pagado">Estado:</label>
+                        <select id="pagado" name="pagado" required>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
                         </select>
 
                         <label for="precio">Precio:</label>
-                        <input type="text" id="precio" name="precio" value="50" required>
+                        <input type="number" id="precio" name="precio" value="50" required>
                         </select>
 
                         <hr class="form-divider">
@@ -73,7 +86,7 @@
                     <div class="column">
                         <div class="person-info">
                             <div class="row">
-                                <div class="col">ID Boleto</div>
+                                <div class="col">Folio</div>
                                 <div class="col">Descripción</div>
                                 <div class="col">Precio</div>
                                 <div class="col">Opciones</div>
