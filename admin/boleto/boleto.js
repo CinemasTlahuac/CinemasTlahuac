@@ -10,8 +10,12 @@ import {
 
 const addForm = document.getElementById('add-form');
 const listContainer = document.getElementById('list-container');
-const listFunciones = document.getElementById('funcion');
+const listFunciones = document.getElementById('fk_idFuncion');
+const listHorarios = document.getElementById('funcionHorario');
 let selectedFuncionOptionValue = '1';
+let selectedHorarioOptionValue = '1';
+let dropdown = document.getElementById("pagado");
+var pagado = dropdown.value;
 
 let editStatus = false;
 let id = '';
@@ -24,17 +28,35 @@ window.addEventListener('DOMContentLoaded', async() => {
         console.log(selectedFuncionOptionValue)
     });
 
-    onGetDocuments('Funcion', (querySnapshot) => {
+    listHorarios.addEventListener("change", () => {
+        selectedHorarioOptionValue = listHorarios.options[listHorarios.selectedIndex].text;
+        console.log(selectedHorarioOptionValue)
+    });
+
+    onGetDocuments('Funcion', (querySnapshot) => { //llenar menu dropdown para funciones disponibles
 
         let htmlFuncion = "";
 
         querySnapshot.forEach((doc) => {
             const option = doc.data();
             htmlFuncion += `
-                <option id="fk_idFuncion" value="${option.idFuncion}">${option.descripcion}</option>
+                <option id="fk_idFuncion" value="${option.idFuncion}">${option.fk_idPelicula}</option>
             `;
         });
         listFunciones.innerHTML = htmlFuncion;
+    })
+
+    onGetDocuments('Funcion', (querySnapshot) => {
+
+        let htmlHorario = "";
+
+        querySnapshot.forEach((doc) => {
+            const option = doc.data();
+            htmlHorario += `
+            <option id="fk_idHorario" value="${option.idFuncion}">${option.fk_idHorario}</option>
+            `;
+        });
+        listHorarios.innerHTML = htmlHorario;
     })
 
     onGetDocuments('Boleto', (querySnapshot) => {
@@ -45,7 +67,7 @@ window.addEventListener('DOMContentLoaded', async() => {
             const item = doc.data();
             html += `
                 <div class="row">
-                    <div class="col">${item.idBoleto}</div>
+                    <div class="col">${item.fk_idFuncion}</div>
                     <div class="col">${item.descripcion}</div>
                     <div class="col">${item.precio}</div>
                     <div class="col">
@@ -73,11 +95,14 @@ window.addEventListener('DOMContentLoaded', async() => {
                 const doc = await getDocument('Boleto', e.target.dataset.id);
                 const item = doc.data();
 
-                addForm["idBoleto"].value = item.idBoleto;
+                addForm["idBoleto"].value = item.cantidadBoletos;
                 addForm["descripcion"].value = item.descripcion;
                 addForm["idAsiento"].value = item.idAsiento;
-                addForm["fechaCompra"].value = item.fechaCompra;
-                addForm["funcion"].value = selectedFuncionOptionValue;
+                addForm["funcionSala"].value = item.funcionSala;
+                addForm["funcionFecha"].value = item.funcionFecha;
+                addForm["fk_idFuncion"].value = selectedFuncionOptionValue;
+                addForm["funcionHorario"].value = selectedHorarioOptionValue;
+                addForm["pagado"].value = item.pagado;
                 addForm["precio"].value = item.precio;
 
                 editStatus = true;
@@ -95,37 +120,56 @@ listFunciones.addEventListener("change", () => {
     return selectedFuncionOptionValue;
 })
 
+listHorarios.addEventListener("change", () => {
+    const selectedHorarioOptionValue = listHorarios.options[listHorarios.selectedIndex].value;
+    console.log(selectedHorarioOptionValue)
+    return selectedHorarioOptionValue;
+})
+
 document.getElementById("btn-save").addEventListener('click', (e) => {
     e.preventDefault()
 
-    const idBoleto = addForm['idBoleto'];
+    const cantidadBoletos = addForm['idBoleto'];
     const descripcion = addForm['descripcion'];
     const idAsiento = addForm['idAsiento'];
-    const fechaCompra = addForm['fechaCompra'];
-    const optionsFuncion = addForm['funcion'];
+    const funcionSala = addForm['funcionSala'];
+    const funcionFecha = addForm['funcionFecha'];
+
+    const optionsFuncion = addForm['fk_idFuncion'];
     const selectedFuncion = optionsFuncion.selectedIndex;
+
+    const optionsHorario = addForm['funcionHorario'];
+    const selectedHorario = optionsHorario.selectedIndex;
+
     const precio = addForm['precio'];
+    const pagado = addForm['pagado'];
 
     if (!editStatus) {
 
         saveDocument(
             'Boleto', {
-                idBoleto: idBoleto.value,
+                cantidadBoletos: cantidadBoletos.value,
                 descripcion: descripcion.value,
                 idAsiento: idAsiento.value,
-                fechaCompra: fechaCompra.value,
+                funcionSala: funcionSala.value,
+                funcionFecha: funcionFecha.value,
                 fk_idFuncion: selectedFuncionOptionValue,
+                funcionHorario: selectedHorarioOptionValue,
+                pagado: pagado.value,
                 precio: precio.value
             });
     } else {
         updateDocument(
             'Boleto',
             id, {
-                idBoleto: idBoleto.value,
+                cantidadBoletos: cantidadBoletos.value,
                 descripcion: descripcion.value,
                 idAsiento: idAsiento.value,
-                fechaCompra: fechaCompra.value,
+                funcionSala: funcionSala.value,
+                funcionFecha: funcionFecha.value,
                 fk_idFuncion: selectedFuncionOptionValue,
+                funcionHorario: selectedHorarioOptionValue,
+                pagado: pagado.value,
                 precio: precio.value
             });
 
@@ -142,23 +186,33 @@ document.getElementById("btn-clean").addEventListener('click', (e) => {
     var idBoleto = document.getElementById("idBoleto");
     var descripcion = document.getElementById("descripcion");
     var idAsiento = document.getElementById("idAsiento");
-    var fechaCompra = document.getElementById("fechaCompra");
+    var funcionSala = document.getElementById("funcionSala");
+    var funcionFecha = document.getElementById("funcionFecha");
     var fk_idFuncion = document.getElementById("fk_idFuncion");
+    var funcionHorario = document.getElementById("funcionHorario");
+    var pagado = document.getElementById("pagado");
     var precio = document.getElementById("precio");
+
 
     if (!editStatus) {
         idBoleto.value = "";
         descripcion.value = "";
         idAsiento.value = "";
-        fechaCompra.value = "";
+        funcionSala.value = "";
+        funcionFecha.value = "";
         fk_idFuncion.value = "";
+        funcionHorario.value = "";
+        pagado.value = "";
         precio.value = "";
     } else {
         idBoleto.value = "";
         descripcion.value = "";
         idAsiento.value = "";
-        fechaCompra.value = "";
+        funcionSala.value = "";
+        funcionFecha.value = "";
         fk_idFuncion.value = "";
+        funcionHorario.value = "";
+        pagado.value = "";
         precio.value = "";
 
         editStatus = false;
