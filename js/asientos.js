@@ -56,8 +56,9 @@ let secondClassValuesArray
 
 // Generar fecha
 const date = new Date();
-const localDate = date.toLocaleDateString();
-fechaFuncion.innerHTML = localDate;
+const options = { month: '2-digit', day: '2-digit', year: 'numeric'};
+const localDate = date.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+console.log(localDate);
 
 // Generar folio
 function generateRandomString(length) {
