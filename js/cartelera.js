@@ -25,12 +25,12 @@ onGetDocuments("Pelicula", (querySnapshot) => {
                 <h2>${item.nombre}</h2>
                 <div class="card-text">
                     <div>
-                        <p><strong>Director:</strong>${item.director}</p>
-                        <p><strong>Género:</strong>${item.genero}</p>
+                        <p><strong>Director:</strong> ${item.director}</p>
+                        <p><strong>Género:</strong> ${item.genero}</p>
                     </div>
                     <div>
-                        <p><strong>Clasificación:</strong>${item.clasificacion}</p>
-                        <p><strong>Duración:</strong>${item.duracion}</p>
+                        <p><strong>Clasificación:</strong> ${item.clasificacion}</p>
+                        <p><strong>Duración:</strong> ${item.duracion}</p>
                     </div>
                 </div>
             
