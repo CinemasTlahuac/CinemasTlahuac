@@ -19,6 +19,22 @@
     box-sizing: border-box;
 }
 
+/*Estilo de caja de imagen */
+
+.image-box { 
+    object-fit: contain;
+    border: 2px var(--negro3);
+    width: 500px; 
+    height: 500px;
+}
+
+.btn-upload {
+    display: flex;
+    border-radius: 10%;
+    position: absolute;
+    align-content: center;
+    color: var(--agregar);
+}
 
 /* Estilo Global */
 
