@@ -45,6 +45,12 @@ let id = '';
 var files = [];
 var reader = new FileReader();
 
+const fin = document.getElementById("cerrarSesion").addEventListener("click", (e) => {
+    e.preventDefault()
+    SignOut();
+    window.location.href = "/index.html";
+
+})
 
 var Uploadbtn = document.getElementById('upload-button');
 
