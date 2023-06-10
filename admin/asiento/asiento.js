@@ -20,6 +20,12 @@ const fin = document.getElementById("cerrarSesion").addEventListener("click", (e
 
 })
 
+const fin = document.getElementById("cerrarSesion").addEventListener("click", (e) => {
+    e.preventDefault()
+    SignOut();
+    window.location.href = "/index.html";
+
+})
 
 window.addEventListener('DOMContentLoaded', async() => {
 
