@@ -17,6 +17,13 @@ let selectedOptionValue = '3';
 let editStatus = false;
 let id = '';
 
+const fin = document.getElementById("cerrarSesion").addEventListener("click", (e) => {
+    e.preventDefault()
+    SignOut();
+    window.location.href = "/index.html";
+
+})
+
 function validateEmail(email, password) {
     const emailPattern  = /\.com$/i; // Match ".com" at the end (case-insensitive)
     const isEmailValid = emailPattern.test(email);
