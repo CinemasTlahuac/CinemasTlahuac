@@ -13,6 +13,13 @@ const listContainer = document.getElementById('list-container');
 let editStatus = false;
 let id = '';
 
+const fin = document.getElementById("cerrarSesion").addEventListener("click", (e) => {
+    e.preventDefault()
+    SignOut();
+    window.location.href = "/index.html";
+
+})
+
 window.addEventListener('DOMContentLoaded', async() => {
 
     onGetDocuments('Horario', (querySnapshot) => {
