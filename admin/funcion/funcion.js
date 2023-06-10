@@ -19,6 +19,12 @@ let selectedPeliculaOptionValue = '1';
 let selectedHorarioOptionValue = '1';
 let selectedSalaOptionValue = '1';
 
+const fin = document.getElementById("cerrarSesion").addEventListener("click", (e) => {
+    e.preventDefault()
+    SignOut();
+    window.location.href = "/index.html";
+
+})
 
 let editStatus = false;
 let id = '';
