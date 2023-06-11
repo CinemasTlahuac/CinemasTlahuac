@@ -107,8 +107,21 @@ window.addEventListener('DOMContentLoaded', async() => {
                 addForm["idAsiento"].value = item.idAsiento;
                 addForm["funcionSala"].value = item.funcionSala;
                 addForm["funcionFecha"].value = item.funcionFecha;
-                addForm["fk_idFuncion"].value = selectedFuncionOptionValue;
-                addForm["funcionHorario"].value = selectedHorarioOptionValue;
+                
+                 for (var i = 0; i < listFunciones.options.length; i++) {
+                    if (listFunciones.options[i].text === item.fk_idFuncion) {
+                        listFunciones.selectedIndex = i;
+                      break;
+                    }
+                }
+
+                for (var i = 0; i < listHorarios.options.length; i++) {
+                    if (listHorarios.options[i].text === item.funcionHorario) {
+                        listHorarios.selectedIndex = i;
+                      break; 
+                    }
+                }
+
                 addForm["pagado"].value = item.pagado;
                 addForm["precio"].value = item.precio;
 
