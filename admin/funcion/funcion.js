@@ -127,9 +127,28 @@ window.addEventListener('DOMContentLoaded', async() => {
 
                 addForm["idFuncion"].value = item.idFuncion;
                 addForm["descripcion"].value = item.descripcion;
-                addForm["peliculas"].value = selectedPeliculaOptionValue;
-                addForm["horarios"].value = selectedHorarioOptionValue;
-                addForm["salas"].value = selectedSalaOptionValue;
+               for (var i = 0; i < listPeliculas.options.length; i++) {
+                    // Check if the text content of the option matches the selectedOption variable
+                    if (listPeliculas.options[i].text === item.fk_idPelicula) {
+                      // Set the matched option as selected
+                      listPeliculas.selectedIndex = i;
+                      break; // Exit the loop since the option is found
+                    }
+                }
+
+                for (var i = 0; i < listHorarios.options.length; i++) {
+                    if (listHorarios.options[i].text === item.fk_idHorario) {
+                      listHorarios.selectedIndex = i;
+                      break;
+                    }
+                }
+
+                for (var i = 0; i < listSalas.options.length; i++) {
+                    if (listSalas.options[i].text === item.fk_idSala) {
+                      listSalas.selectedIndex = i;
+                      break; 
+                    }
+                }
 
                 editStatus = true;
                 id = doc.id;
