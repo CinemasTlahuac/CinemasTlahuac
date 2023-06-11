@@ -120,7 +120,7 @@ window.addEventListener('DOMContentLoaded', async() => {
             })
         });
 
-        btnsEdit.forEach((btn) => {                     //eliminar documento
+        btnsEdit.forEach((btn) => {                     //modificar documento
             btn.addEventListener('click', async(e) => {
                 const doc = await getDocument('Funcion', e.target.dataset.id);
                 const item = doc.data();
