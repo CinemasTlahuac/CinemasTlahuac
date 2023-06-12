@@ -5,7 +5,8 @@ import {
     getDocuments,
     onGetDocuments,
     deleteDocuments,
-    updateDocument
+    updateDocument,
+    SignOut
 } from '../../js/init.js';
 
 const addForm = document.getElementById('add-form');
