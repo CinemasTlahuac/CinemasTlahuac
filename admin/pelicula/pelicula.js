@@ -7,7 +7,8 @@ import {
     getDocuments,
     onGetDocuments,
     deleteDocuments,
-    updateDocument
+    updateDocument,
+    SignOut
 } from '../../js/init.js';
 
 import {
